@@ -1,0 +1,42 @@
+import React, { useState } from 'react';
+
+function VotingApp() {
+  const [isVotingActive, setIsVotingActive] = useState(false);
+  const [votingDuration, setVotingDuration] = useState(0);
+
+  const startVoting = () => {
+    setIsVotingActive(true);
+    setTimeout(() => {
+      stopVoting();
+    }, votingDuration * 60000); // Convert minutes to milliseconds
+  };
+
+  const stopVoting = () => {
+    setIsVotingActive(false);
+    // Call your solidity stop function here
+  };
+
+  return (
+    <div>
+      <h1>Voting Application</h1>
+      {isVotingActive ? (
+        <div>
+          <p>Voting is active for {votingDuration} minutes.</p>
+          <button onClick={stopVoting}>Stop Voting</button>
+        </div>
+      ) : (
+        <div>
+          <label>Enter voting duration (minutes): </label>
+          <input
+            type="number"
+            value={votingDuration}
+            onChange={(e) => setVotingDuration(e.target.value)}
+          />
+          <button onClick={startVoting}>Start Voting</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default VotingApp;
